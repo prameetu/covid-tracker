@@ -6,15 +6,19 @@
         font-family: sans-serif;
         /* Change your font family */
     }
-    table, th, td {
-        border: 1px solid black;
+
+    table,
+    th,
+    td {
+        border: 1px solid white;
+        border-collapse: collapse;
     }
 
     .content-table {
         border-collapse: collapse;
         margin: 25px 0;
         font-size: 0.9em;
-        min-width: 400px;
+        min-width: 400px !important ; 
         border-radius: 5px 5px 0 0;
         overflow: hidden;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -105,44 +109,82 @@
     <br><br><br>
 
     <div class="container">
-
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th scope="col">S.No</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Total Cases</th>
-                    <th scope="col">Past 24 Hour Cases</th>
-                    <th scope="col">Total Recovered</th>
-                    <th scope="col">Past 24 Recovered</th>
-                    <th scope="col">Total Deaths</th>
-                    <th scope="col">Past 24 Deaths</th>
-                    <th scope="col">Total Test</th>
-                    <th scope="col">Past 24 Test</th>
-
-
-
-
-                </tr>
-            </thead>
-            <tbody>
-                {%for a,b,c,d,e,f,g,h,i in data %}
-                <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td>{{a}}</td>
-                    <td>{{b}}</td>
-                    <td>{{c}}</td>
-                    <td>{{e}}</td>
-                    <td>{{d}}</td>
-                    <td>{{f}}</td>
-                    <td>{{g}}</td>
-                    <td>{{h}}</td>
-                    <td>{{i}}</td>
-                </tr>
-
-                {%endfor%}
-            </tbody>
-        </table>
+        <div class="col-6">
+            <table class="table table-hover content-table">
+                <thead>
+                    <tr>
+                        <th scope="col"><h4>S.No</h4></th>
+                        <th scope="col"><h4>State/UT</h4></th>
+                        <th scope="col"><h4>Cases</h4></th>
+                        <th scope="col"><h4>Recovered</h4></th>
+                        <th scope="col"><h4>Deaths</h4></th>
+                        <th scope="col"><h4>Test</h4></th>
+    
+    
+    
+    
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for a,b,c,d,e,f,g,h,i in data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td><p><b>{{a}}</b></p></td>
+                        <!--State-->
+                        <td>
+                            <b><h5>{{b}}</h5></ 
+                            {%if c != '-' and  c != "0" %}
+                                <b><p style="color: red; font-size:large">⬆ {{c}}</p></b>
+                            {%else%}
+                                <b><p style=" font-size:large"> {{c}}</p></b>
+                            {%endif%}
+    
+                        </td>
+                        <!--Cases-->
+    
+                        <td>
+                            <b><h5>{{d}}</h5></ 
+                            {%if e != '-' and  e != 0 %}
+                                <b><p style="color: green;font-size:large">⬆ {{e}}</p></b>
+                            {% else %}
+                                <b><p style="color: green;font-size:large"> {{e}}</p></b>
+                            {%endif%}
+    
+                        </td>
+                        <!--Recovered-->
+    
+                        <td>
+                            <b><h5>{{f}}</h5></ 
+                            {%if g != '-' and  g != 0 %}
+                                <b><p style="color:grey;font-size:large">⬆ {{g}}</p></b>
+                            {% else %}
+                                <b><p style="color:grey;font-size:large">{{g}}</p></b>
+                            {%endif%}
+    
+    
+                        </td>
+                        <!--Deaths-->
+    
+    
+                        <td>
+                            <b><h5>{{h}}</h5></ 
+                            {%if i != '-' and  i != 0 %}
+                                <b><p style="color: indianred;font-size:large">⬆ {{i}}</p></b>
+                            {% else %}
+                                <b><p style="color:indianred ;font-size:large"> {{i}}</p></b>
+                            {%endif%}
+    
+    
+                        </td>
+                        <!--Test-->
+    
+                    </tr>
+    
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        
 
     </div>
 
