@@ -63,42 +63,56 @@ def state_wise(request):
     last24recover = []
     last24test= []
 
-    # print(data_json[b]['total'])
-
     for a, b in dict.items():
         state.append(a)
-        if data_json[b]['delta']['confirmed'] == None:
-            last24cases.append('-')
-        else:
-            last24cases.append(data_json[b]['delta']['confirmed'])
+        last24cases.append(data_json[b]['delta']['confirmed'])
+        last24deaths.append(data_json[b]['delta']['deceased'])
+        last24recover.append(data_json[b]['delta']['recovered'])
+        last24test.append(data_json[b]['delta']['tested'])
+        totalCases.append(data_json[b]['delta']['confirmed'])
+        totalDeaths.append(data_json[b]['total']['deceased'])
+        totalRecover.append(data_json[b]['total']['recovered'])
+        totalTested.append(data_json[b]['total']['tested'])
+    
         
-        if data_json[b]['delta']['tested'] == None:
-            last24test.append('-')
-        else:
-            last24test.append(data_json[b]['delta']['tested'])
+
+
+    # print(data_json[b]['total'])
+
+    # for a, b in dict.items():
+    #     state.append(a)
+    #     if data_json[b]['delta']['confirmed'] == None:
+    #         last24cases.append('-')
+    #     else:
+    #         last24cases.append(data_json[b]['delta']['confirmed'])
         
-        if data_json[b]['total']['tested'] == None:
-            totalTested.append('-')
-        else:
-            totalTested.append(data_json[b]['total']['tested'])
+    #     if data_json[b]['delta']['tested'] == None:
+    #         last24test.append('-')
+    #     else:
+    #         last24test.append(data_json[b]['delta']['tested'])
         
-        # last24deaths.append(data_json[b]['delta']['deceased'])
-        # last24recover.append(data_json[b]['delta']['recovered'])
-        # totalCases.append(data_json[b]['delta']['confirmed'])
-        # totalDeaths.append(data_json[b]['total']['deceased'])
-        # totalRecover.append(data_json[b]['total']['recovered'])
+    #     if data_json[b]['total']['tested'] == None:
+    #         totalTested.append('-')
+    #     else:
+    #         totalTested.append(data_json[b]['total']['tested'])
+        
+    #     # last24deaths.append(data_json[b]['delta']['deceased'])
+    #     # last24recover.append(data_json[b]['delta']['recovered'])
+    #     # totalCases.append(data_json[b]['delta']['confirmed'])
+    #     # totalDeaths.append(data_json[b]['total']['deceased'])
+    #     # totalRecover.append(data_json[b]['total']['recovered'])
     
     
     url1="https://api.apify.com/v2/key-value-stores/toDWvRj1JpTXiM8FF/records/LATEST?disableRedirect=true"
     response = urlopen(url1)  
     data_json = json.loads(response.read())
     
-    for x in data_json['regionData']:
-        last24deaths.append(x['newDeceased'])
-        last24recover.append(x['newRecovered'])
-        totalCases.append(x['totalInfected'])
-        totalDeaths.append(x['deceased'])
-        totalRecover.append(x['recovered'])
+    # for x in data_json['regionData']:
+    #     last24deaths.append(x['newDeceased'])
+    #     last24recover.append(x['newRecovered'])
+    #     totalCases.append(x['totalInfected'])
+    #     totalDeaths.append(x['deceased'])
+    #     totalRecover.append(x['recovered'])
 
     ac = data_json['activeCases']
     acn = data_json['activeCasesNew']
