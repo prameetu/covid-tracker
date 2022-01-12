@@ -2,7 +2,7 @@ from django.http.response import Http404, HttpResponse
 from django.shortcuts import render
 from urllib.request import urlopen
 import json
-
+import certifi
 
 
 
@@ -10,7 +10,7 @@ def state_wise(request):
 
     url = "https://api.covid19tracker.in/data/static/data.min.json"
 
-    response = urlopen(url)
+    response = urlopen(url,cafile=certifi.where())
 
     data_json = json.loads(response.read())
 
@@ -104,7 +104,7 @@ def state_wise(request):
     
     
     url1="https://api.apify.com/v2/key-value-stores/toDWvRj1JpTXiM8FF/records/LATEST?disableRedirect=true"
-    response = urlopen(url1)  
+    response = urlopen(url1,cafile=certifi.where())  
     data_json = json.loads(response.read())
     
     # for x in data_json['regionData']:

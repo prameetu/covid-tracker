@@ -40,13 +40,50 @@
         border-bottom: 1px solid #dddddd;
     }
 
-    .content-table tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
+    
 
-    .content-table tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
+    {% comment %} .row:nth-of-type(2n) {
+        background-color:#eceff2 ;
+    } {% endcomment %}
+
+    .view{
+        border:5px solid white !important;
+        border-radius:7px !important;
+        margin-left:1px !important;
+        margin-top:3px !important;
+        padding:0 !important;
+        background-color:#eceff1;
     }
+    .view h5{
+        text-align:left !important;
+    }
+{% comment %} 
+    @media screen and (max-width: 768px) {
+
+        .view{
+            border-radius:3px !important;
+            border:4px solid black !important;
+            margin-left:3px !important;
+            margin-top:3px !important;
+            font-size:2vh !important;
+        }
+
+        .view h5{
+            font-size:3vh !important;
+            padding:0 !important;
+            margin:0 !important;
+        }
+
+        
+        .view h4{
+            font-size:3vh !important;
+            padding:0 !important;
+            margin:0 !important;
+        }
+
+      } {% endcomment %}
+
+
 </style>
 
 <head>
@@ -109,8 +146,8 @@
     <br><br><br>
 
     <div class="container">
-        <div class="col-6">
-            <table class="table table-hover content-table">
+        <div class="col">
+            {% comment %} <table class="table table-hover content-table">
                 <thead>
                     <tr>
                         <th scope="col"><h4>S.No</h4></th>
@@ -119,9 +156,6 @@
                         <th scope="col"><h4>Recovered</h4></th>
                         <th scope="col"><h4>Deaths</h4></th>
                         <th scope="col"><h4>Test</h4></th>
-    
-    
-    
     
                     </tr>
                 </thead>
@@ -182,7 +216,96 @@
     
                     {%endfor%}
                 </tbody>
-            </table>
+            </table> {% endcomment %}
+
+            <div class="row">
+{% comment %}                 
+                <div class="col-sm-1 view col-1">
+                    <h5>S.No</h5>
+                </div>
+                 {% endcomment %}
+                <div class="col-sm-2 view col-2">
+                    <h5>State/UT</h5>
+                </div>
+
+                <div class="col-sm-1 view col-2">
+                    <h5>Cases</h5>
+                </div>
+
+                <div class="col-sm-1 view col-2">
+                    <h5>Recovered</h5>
+                </div>
+                
+                <div class="col-sm-1 view col-2">
+                    <h5>Deaths</h5>
+                </div>
+                
+                <div class="col-sm-1 view col-2">
+                    <h5>Test</h5>
+                </div>
+
+
+              </div>
+
+
+              {%for a,b,c,d,e,f,g,h,i in data %}      
+              <div class="row">
+                
+                {% comment %} <div class="col-sm-1 view col-1">
+                    <h4>{{forloop.counter}}</h4>
+                </div>
+                 {% endcomment %}
+                <div class="col-sm-2 view col-2">
+                    <p><b>{{a}}</b></p>
+                </div>
+
+                <div class="col-sm-1 view col-2">
+                    <b><h5>{{b}}</h5></b> 
+                        {%if c != '-' and  c != "0" %}
+                            <b><p style="color: red; font-size:large">⬆ {{c}}</p></b>
+                        {%else%}
+                            <b><p style=" font-size:large"> {{c}}</p></b>
+                        {%endif%}
+
+                </div>
+
+                <div class="col-sm-1 view col-2">
+                    <b><h5>{{d}}</h5></b> 
+                        {%if e != '-' and  e != 0 %}
+                            <b><p style="color: green;font-size:large">⬆ {{e}}</p></b>
+                        {% else %}
+                            <b><p style="color: green;font-size:large"> {{e}}</p></b>
+                        {%endif%}
+                </div>
+                
+                <div class="col-sm-1 view col-2">
+                    <b><h5>{{f}}</h5></b>
+                        {%if g != '-' and  g != 0 %}
+                            <b><p style="color:grey;font-size:large">⬆ {{g}}</p></b>
+                        {% else %}
+                            <b><p style="color:grey;font-size:large">{{g}}</p></b>
+                        {%endif%}
+                </div>
+                
+                <div class="col-sm-1 view col-2">
+                    <b><h5>{{h}}</h5></b>
+                    {%if i != '-' and  i != 0 %}
+                    <b><p style="color: indianred;font-size:large">⬆ {{i}}</p></b>
+                {% else %}
+                    <b><p style="color:indianred ;font-size:large"> {{i}}</p></b>
+                {%endif%}
+
+
+                </div>
+
+            </div>
+                {%endfor%}
+
+
+
+
+
+
         </div>
         
 
