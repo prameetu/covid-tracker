@@ -3,6 +3,8 @@ from django.shortcuts import render
 from urllib.request import urlopen
 import json
 import certifi
+from datetime import datetime
+
 
 
 
@@ -65,36 +67,74 @@ def state_wise(request):
 
     for a, b in dict.items():
         state.append(a)
-        last24cases.append(data_json[b]['delta']['confirmed'])
-        last24deaths.append(data_json[b]['delta']['deceased'])
-        last24recover.append(data_json[b]['delta']['recovered'])
-        last24test.append(data_json[b]['delta']['tested'])
-        totalCases.append(data_json[b]['delta']['confirmed'])
-        totalDeaths.append(data_json[b]['total']['deceased'])
-        totalRecover.append(data_json[b]['total']['recovered'])
-        totalTested.append(data_json[b]['total']['tested'])
-    
+
+        if data_json[b]['delta']['confirmed'] == None:
+            last24cases.append('-')
+        else:
+            last24cases.append(data_json[b]['delta']['confirmed'])
+
+        if data_json[b]['delta']['deceased'] == None:
+            last24deaths.append('-')
+        else:
+            last24deaths.append(data_json[b]['delta']['deceased'])
+
+        if data_json[b]['delta']['recovered'] == None:
+            last24recover.append('-')
+        else:
+            last24recover.append(data_json[b]['delta']['recovered'])
+
+        if data_json[b]['delta']['tested'] == None:
+            last24test.append('-')
+        else:
+            last24test.append(data_json[b]['delta']['tested'])
+
+        if data_json[b]['total']['confirmed'] == None:
+            totalCases.append('-')
+        else:
+            totalCases.append(data_json[b]['total']['confirmed'])
+
+        if data_json[b]['total']['deceased'] == None:
+            totalDeaths.append('-')
+        else:
+            totalDeaths.append(data_json[b]['total']['deceased'])
+
         
+        if data_json[b]['total']['recovered'] == None:
+            totalRecover.append('-')
+        else:
+            totalRecover.append(data_json[b]['total']['recovered'])
+
+        if data_json[b]['total']['tested'] == None:
+            totalTested.append('-')
+        else:
+            totalTested.append(data_json[b]['total']['tested'])
 
 
+        
+        
+    last_updated = data_json["TT"]["meta"]["last_updated"]
+    last_date = last_updated[:10]
+    last_time = last_updated[11:19]
+    
+    
     # print(data_json[b]['total'])
 
     # for a, b in dict.items():
     #     state.append(a)
-    #     if data_json[b]['delta']['confirmed'] == None:
-    #         last24cases.append('-')
-    #     else:
-    #         last24cases.append(data_json[b]['delta']['confirmed'])
+        # if data_json[b]['delta']['confirmed'] == None:
+        #     last24cases.append('-')
+        # else:
+        #     last24cases.append(data_json[b]['delta']['confirmed'])
         
-    #     if data_json[b]['delta']['tested'] == None:
-    #         last24test.append('-')
-    #     else:
-    #         last24test.append(data_json[b]['delta']['tested'])
+        # if data_json[b]['delta']['tested'] == None:
+        #     last24test.append('-')
+        # else:
+        #     last24test.append(data_json[b]['delta']['tested'])
         
-    #     if data_json[b]['total']['tested'] == None:
-    #         totalTested.append('-')
-    #     else:
-    #         totalTested.append(data_json[b]['total']['tested'])
+        # if data_json[b]['total']['tested'] == None:
+        #     totalTested.append('-')
+        # else:
+        #     totalTested.append(data_json[b]['total']['tested'])
         
     #     # last24deaths.append(data_json[b]['delta']['deceased'])
     #     # last24recover.append(data_json[b]['delta']['recovered'])
@@ -131,7 +171,9 @@ def state_wise(request):
         'rec':rec,
         'recNew':recNew,
         'dths':dths,
-        'dthsNew':dthsNew
+        'dthsNew':dthsNew,
+        "last_date":last_date,
+        "last_time":last_time
     }
 
     return render(request,'cases.html',cont_dict)

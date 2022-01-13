@@ -1,89 +1,126 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
 
 <style>
-    * {
-        font-family: sans-serif;
-        /* Change your font family */
+    *{
+        font-family: 'Titillium Web', sans-serif;
+    }
+    .mainHeading{
+        margin-top: 3.5% !important;
+        font-weight: 900;
+
+        text-shadow: 4px 4px rgb(216, 215, 215);
+
     }
 
-    table,
-    th,
-    td {
-        border: 1px solid white;
-        border-collapse: collapse;
+    @media screen and (min-width:700px) {
+        .mainHeading{
+            font-size: 9vh;
+
+        }
     }
 
-    .content-table {
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        min-width: 400px !important ; 
-        border-radius: 5px 5px 0 0;
-        overflow: hidden;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    .view {
+        border: 5px solid white !important;
+        border-radius: 10px !important;
+        margin-left: 1px !important;
+        margin-top: 3px !important;
+        padding: 0 !important;
+        background-color: rgb(192 217 255 / 25%);
+    }
+    .heading{
+        background-color: #efefef;
     }
 
-    .content-table thead tr {
-        background-color: #009879;
-        color: #ffffff;
-        text-align: left;
+    .view p {
+        text-align: left !important;
+    }
+    
+    .active{
+        background-color: red; /* For browsers that do not support gradients */
+        background-image: linear-gradient( rgb(73, 133, 245) , rgb(206, 222, 255));
+        color:darkblue;
+        border-radius: 20%;
+    }
+    .recover{
+        background-color: red; /* For browsers that do not support gradients */
+        background-image: linear-gradient( rgb(107, 245, 95) , rgb(205, 255, 189));
+        color:darkgreen;
+        border-radius: 20%;
+
+
+    }
+    .deaths{
+        background-color: red; /* For browsers that do not support gradients */
+        background-image: linear-gradient( rgb(243, 115, 115) , rgb(255, 198, 198));
+        color:rgb(90, 0, 0);
+        border-radius: 20%;
+
+
+    }
+    .buttonHeading{
+        font-weight: 900;
+    }
+
+
+    /*.view:nth-of-type(even) {
+        background-color: whitesmoke
+    }*/
+    .lastUpdate{
+        font-size:smaller;
         font-weight: bold;
     }
 
-    .content-table th,
-    .content-table td {
-        padding: 12px 15px;
-    }
-
-    .content-table tbody tr {
-        border-bottom: 1px solid #dddddd;
+    @media screen and (min-width:1020px) {
+        .data {
+            padding-left: 280px !important;
+            padding-right: 280px !important;
+        }
     }
 
     
 
-    {% comment %} .row:nth-of-type(2n) {
-        background-color:#eceff2 ;
-    } {% endcomment %}
 
-    .view{
-        border:5px solid white !important;
-        border-radius:7px !important;
-        margin-left:1px !important;
-        margin-top:3px !important;
-        padding:0 !important;
-        background-color:#eceff1;
-    }
-    .view h5{
-        text-align:left !important;
-    }
-{% comment %} 
     @media screen and (max-width: 768px) {
 
-        .view{
-            border-radius:3px !important;
-            border:4px solid black !important;
-            margin-left:3px !important;
-            margin-top:3px !important;
-            font-size:2vh !important;
+        .view {
+            border-radius: 8px !important;
+            border: 1px solid white !important;
+            margin-left: 3px !important;
+            margin-top: 3px !important;
+            font-size: 12px !important;
         }
 
-        .view h5{
-            font-size:3vh !important;
-            padding:0 !important;
-            margin:0 !important;
+        .view p {
+            font-size: 12.5px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .data{
+            margin-left: 3% !important;
+        }
+        .dataTable{
+            margin-left: 5% !important;
         }
 
+
+        .mainData{
+            font-size: 10px !important;
+        }
         
-        .view h4{
-            font-size:3vh !important;
-            padding:0 !important;
-            margin:0 !important;
+        .temp{
+            display: none;
+        }
+        .recover{
+            margin-left: 20px;
+        }
+        .deaths{
+            margin-left: 24px;
         }
 
-      } {% endcomment %}
-
-
+    }
 </style>
 
 <head>
@@ -94,220 +131,179 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>Covid Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;400&display=swap" rel="stylesheet">
+        <title>Covid Tracker</title>
 </head>
 
 <body>
 
     <center>
-        <h1>COVID TRACKER</h1>
+        <h1 class="mainHeading">COVID TRACKER</h1>
+        <!-- <img src="{% static 'img.png' %}"> -->
+        
     </center>
 
     <br>
     <br>
-    <div class="container">
+    <div class="container data">
         <div class="row">
-            <div class="col-2">
-
-            </div>
-            <div class="col-3">
-                <button type="button" class="btn btn-info disabled">
-                    <h3>Active</h3>
-                    <h1>{{ac}}</h1>
-                    <h5>{{acn}}</h5>
+           
+            <div class="col-xs-3 col-3">
+                <button type="button" disabled class="mainData active">
+                    <b><h3 class="buttonHeading">Active</h3></b>
+                    <h2>{{ac}}</h2>
+                    <b><p style="color: red;font-size:large">⬆{{acn}}</p></b>
                 </button>
 
             </div>
-            <div class="col-3">
-                <button type="button" class="btn btn-success disabled">
-                    <h3>Recovered</h3>
+            <div class="col-xs-1 col-1 temp">
+                
+            </div>
+            <div class="col-xs-4 col-4">
+                <button type="button" disabled class="mainData recover">
+                    <h3 class="buttonHeading">Recovered</h3>
 
-                    <h1>{{rec}}</h1>
-                    <h5>{{recNew}}</h5>
+                    <h2>{{rec}}</h2>
+                    <b><p style="color: rgb(0, 65, 16);font-size:large">⬆{{recNew}}</p></b>
                 </button>
 
             </div>
-            <div class="col-3">
-                <button type="button" class="btn btn-danger disabled">
-                    <h3>Deaths</h3>
+            <div class="col-xs-1 col-1 temp">
+                
+            </div>
+            <div class=" col-xs-3 col-3">
+                <button type="button" disabled class="mainData deaths">
+                    <h3 class="buttonHeading">Deaths</h3>
 
-                    <h1>{{dths}}</h1>
-                    <h5>{{dthsNew}}</h5>
+                    <h2>{{dths}}</h2>
+                    <b><p style="color: rgb(107, 1, 1);font-size:large">⬆{{dthsNew}}</p></b>
                 </button>
 
             </div>
-            <div class="col-1">
-
-            </div>
+            
+            
         </div>
     </div>
 
     <br><br><br>
+    <center><p class="lastUpdate">*Last Updated on {{last_date}},{{last_time}} hrs,IST</p></center>
+    <div class="container data dataTable">
 
-    <div class="container">
-        <div class="col">
-            {% comment %} <table class="table table-hover content-table">
-                <thead>
-                    <tr>
-                        <th scope="col"><h4>S.No</h4></th>
-                        <th scope="col"><h4>State/UT</h4></th>
-                        <th scope="col"><h4>Cases</h4></th>
-                        <th scope="col"><h4>Recovered</h4></th>
-                        <th scope="col"><h4>Deaths</h4></th>
-                        <th scope="col"><h4>Test</h4></th>
-    
-                    </tr>
-                </thead>
-                <tbody>
-                    {%for a,b,c,d,e,f,g,h,i in data %}
-                    <tr>
-                        <th scope="row">{{forloop.counter}}</th>
-                        <td><p><b>{{a}}</b></p></td>
-                        <!--State-->
-                        <td>
-                            <b><h5>{{b}}</h5></ 
-                            {%if c != '-' and  c != "0" %}
-                                <b><p style="color: red; font-size:large">⬆ {{c}}</p></b>
-                            {%else%}
-                                <b><p style=" font-size:large"> {{c}}</p></b>
-                            {%endif%}
-    
-                        </td>
-                        <!--Cases-->
-    
-                        <td>
-                            <b><h5>{{d}}</h5></ 
-                            {%if e != '-' and  e != 0 %}
-                                <b><p style="color: green;font-size:large">⬆ {{e}}</p></b>
-                            {% else %}
-                                <b><p style="color: green;font-size:large"> {{e}}</p></b>
-                            {%endif%}
-    
-                        </td>
-                        <!--Recovered-->
-    
-                        <td>
-                            <b><h5>{{f}}</h5></ 
-                            {%if g != '-' and  g != 0 %}
-                                <b><p style="color:grey;font-size:large">⬆ {{g}}</p></b>
-                            {% else %}
-                                <b><p style="color:grey;font-size:large">{{g}}</p></b>
-                            {%endif%}
-    
-    
-                        </td>
-                        <!--Deaths-->
-    
-    
-                        <td>
-                            <b><h5>{{h}}</h5></ 
-                            {%if i != '-' and  i != 0 %}
-                                <b><p style="color: indianred;font-size:large">⬆ {{i}}</p></b>
-                            {% else %}
-                                <b><p style="color:indianred ;font-size:large"> {{i}}</p></b>
-                            {%endif%}
-    
-    
-                        </td>
-                        <!--Test-->
-    
-                    </tr>
-    
-                    {%endfor%}
-                </tbody>
-            </table> {% endcomment %}
+        <div class="row ">
+            <!-- <div class="col-2 spacing">
 
-            <div class="row">
-{% comment %}                 
-                <div class="col-sm-1 view col-1">
-                    <h5>S.No</h5>
-                </div>
-                 {% endcomment %}
-                <div class="col-sm-2 view col-2">
-                    <h5>State/UT</h5>
+            </div> -->
+            <div class="col">
+                <div class="row">
+
+                    <div class="col-sm heading view col-2">
+                        <p><b>State/UT</b></p>
+                    </div>
+
+                    <div class="col-sm heading view col-2">
+                        <p><b>Cases</b></p>
+                    </div>
+
+                    <div class="col-sm heading view col-2">
+                        <p><b>Recovered</b></p>
+                    </div>
+
+                    <div class="col-sm heading view col-2">
+                        <p><b>Deaths</b></p>
+                    </div>
+
+                    <div class="col-sm heading view col-2">
+                        <p><b>Tests</b></p>
+                    </div>
+                    
+                    
+
+
                 </div>
 
-                <div class="col-sm-1 view col-2">
-                    <h5>Cases</h5>
-                </div>
-
-                <div class="col-sm-1 view col-2">
-                    <h5>Recovered</h5>
-                </div>
-                
-                <div class="col-sm-1 view col-2">
-                    <h5>Deaths</h5>
-                </div>
-                
-                <div class="col-sm-1 view col-2">
-                    <h5>Test</h5>
-                </div>
+                {%for a,b,c,d,e,f,g,h,i in data %}
+                <div class="row effect">
 
 
-              </div>
+                    <div class="col-sm heading view col-2">
+                        <p><b>{{a}}</b></p>
+                    </div>
 
-
-              {%for a,b,c,d,e,f,g,h,i in data %}      
-              <div class="row">
-                
-                {% comment %} <div class="col-sm-1 view col-1">
-                    <h4>{{forloop.counter}}</h4>
-                </div>
-                 {% endcomment %}
-                <div class="col-sm-2 view col-2">
-                    <p><b>{{a}}</b></p>
-                </div>
-
-                <div class="col-sm-1 view col-2">
-                    <b><h5>{{b}}</h5></b> 
-                        {%if c != '-' and  c != "0" %}
-                            <b><p style="color: red; font-size:large">⬆ {{c}}</p></b>
+                    <div class="col-sm view col-2">
+                        <b>
+                            <p>{{b}}</p>
+                        </b>
+                        {%if c != '-' and c != 0 %}
+                        <b>
+                            <p style="color: red; font-size:large">⬆{{c}}</p>
+                        </b>
                         {%else%}
-                            <b><p style=" font-size:large"> {{c}}</p></b>
+                        <b>
+                            <p style="color: red; font-size:large"> {{c}}</p>
+                        </b>
                         {%endif%}
 
-                </div>
+                    </div>
 
-                <div class="col-sm-1 view col-2">
-                    <b><h5>{{d}}</h5></b> 
-                        {%if e != '-' and  e != 0 %}
-                            <b><p style="color: green;font-size:large">⬆ {{e}}</p></b>
+                    <div class="col-sm view col-2">
+                        <b>
+                            <p>{{d}}</p>
+                        </b>
+                        {%if e != '-' and e != 0 %}
+                        <b>
+                            <p style="color: green;font-size:large">⬆{{e}}</p>
+                        </b>
                         {% else %}
-                            <b><p style="color: green;font-size:large"> {{e}}</p></b>
+                        <b>
+                            <p style="color: green;font-size:large"> {{e}}</p>
+                        </b>
                         {%endif%}
-                </div>
-                
-                <div class="col-sm-1 view col-2">
-                    <b><h5>{{f}}</h5></b>
-                        {%if g != '-' and  g != 0 %}
-                            <b><p style="color:grey;font-size:large">⬆ {{g}}</p></b>
+                    </div>
+
+                    <div class="col-sm view col-2">
+                        <b>
+                            <p>{{f}}</p>
+                        </b>
+                        {%if g != '-' and g != 0 %}
+                        <b>
+                            <p style="color:grey;font-size:large">⬆{{g}}</p>
+                        </b>
                         {% else %}
-                            <b><p style="color:grey;font-size:large">{{g}}</p></b>
+                        <b>
+                            <p style="color:grey;font-size:large">{{g}}</p>
+                        </b>
                         {%endif%}
+                    </div>
+
+                    <div class="col-sm view col-2">
+                        <b>
+                            <p>{{h}}</p>
+                        </b>
+                        {%if i != '-' and i != 0 %}
+                        <b>
+                            <p style="color: indianred;font-size:large">⬆{{i}}</p>
+                        </b>
+                        {% else %}
+                        <b>
+                            <p style="color:indianred ;font-size:large"> {{i}}</p>
+                        </b>
+                        {%endif%}
+
+
+                    </div>
+
                 </div>
-                
-                <div class="col-sm-1 view col-2">
-                    <b><h5>{{h}}</h5></b>
-                    {%if i != '-' and  i != 0 %}
-                    <b><p style="color: indianred;font-size:large">⬆ {{i}}</p></b>
-                {% else %}
-                    <b><p style="color:indianred ;font-size:large"> {{i}}</p></b>
-                {%endif%}
-
-
-                </div>
-
-            </div>
                 {%endfor%}
+            </div>
+            <!-- <div class="col-2 spacing">
 
-
-
-
-
+            </div> -->
 
         </div>
-        
+
+
 
     </div>
 
