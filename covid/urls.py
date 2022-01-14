@@ -7,4 +7,5 @@ app_name = 'app4'
 
 urlpatterns = [
     path('', views.state_wise, name='cases'),
+    path('<str:num>/',views.state_wise1)
 ]

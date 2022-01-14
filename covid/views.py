@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http.response import Http404, HttpResponse
 from django.shortcuts import render
 from urllib.request import urlopen
@@ -177,3 +178,125 @@ def state_wise(request):
     }
 
     return render(request,'cases.html',cont_dict)
+
+
+
+
+
+def state_wise1(request,num):
+
+    url = "https://api.covid19tracker.in/data/static/data.min.json"
+
+    response = urlopen(url,cafile=certifi.where())
+
+    data_json = json.loads(response.read())
+
+    dict = {
+        "Andaman and Nicobar Islands": "AN",
+        "Andhra Pradesh": "AP",
+        "Arunachal Pradesh": "AR",
+        "Assam": "AS",
+        "Bihar": "BR",
+        "Chandigarh": "CH",
+        "Chhattisgarh": "CT",
+        "Dadra and Nagar Haveli": "DN",
+        "Delhi": "DL",
+        "Goa": "GA",
+        "Gujarat": "GJ",
+        "Haryana": "HR",
+        "Himachal Pradesh": "HP",
+        "Jammu and Kashmir": "JK",
+        "Jharkhand": "JH",
+        "Karnataka": "KA",
+        "Kerala": "KL",
+        "Ladakh": "LA",
+        "Lakshadweep": "LD",
+        "Madhya Pradesh": "MP",
+        "Maharashtra": "MH",
+        "Manipur": "MN",
+        "Meghalaya": "ML",
+        "Mizoram": "MZ",
+        "Nagaland": "NL",
+        "Odisha": "OR",
+        "Puducherry": "PY",
+        "Punjab": "PB",
+        "Rajasthan": "RJ",
+        "Sikkim": "SK",
+        "Tamil Nadu": "TN",
+        "Telangana": "TG",
+        "Tripura": "TR",
+        "Uttar Pradesh": "UP",
+        "Uttarakhand": "UT",
+        "West Bengal": "WB",
+    }
+
+    #THIS IS AN DICTIONARY THAT STORES THE STATE NAME AND LIST OF STATE DISTRICTS 
+    districts={}
+
+    for i in dict:
+        dist=data_json[dict[i]]['districts']
+        li=[]   
+        for j in dist:
+            li.append(j)
+        
+        state_dist={
+                i:li
+        }
+        districts[i]=li
+    
+    code=dict[num]
+    state_districts=districts[num]
+
+    districts_new_data=[]
+    districts_total_data=[]
+
+    for i in state_districts:
+        #FOR THE APST 24 HRS DATA
+        temp=[]
+        temp.append(data_json[code]['districts'][i]['delta']['confirmed'])
+        temp.append(data_json[code]['districts'][i]['delta']['deceased'])
+        temp.append(data_json[code]['districts'][i]['delta']['recovered'])
+        temp.append(data_json[code]['districts'][i]['delta']['tested'])
+        districts_new_data.append(temp)
+
+        #FOR THE TOTAL DATA
+        temp=[]
+        temp.append(data_json[code]['districts'][i]['total']['confirmed'])
+        temp.append(data_json[code]['districts'][i]['total']['deceased'])
+        temp.append(data_json[code]['districts'][i]['total']['recovered'])
+        temp.append(data_json[code]['districts'][i]['total']['tested'])
+        districts_total_data.append(temp)
+
+    data=zip(state_districts,districts_total_data,districts_new_data)
+
+    #FOR OVERALL DATA OF THE STATE
+    ac = data_json[code]['total']['confirmed']
+    acn = data_json[code]['delta']['confirmed']
+
+    rec = data_json[code]['total']['recovered']
+    recNew = data_json[code]['delta']['recovered']
+
+    dths = data_json[code]['total']['deceased']
+    dthsNew = data_json[code]['delta']['deceased']
+
+    
+    last_updated = data_json[code]["meta"]["last_updated"]
+    last_date = last_updated[:10]
+    last_time = last_updated[11:19]
+
+    context={
+        'data':data,
+        'ac':ac,
+        'acn':acn,
+        'rec':rec,
+        'recNew':recNew,
+        'dths':dths,
+        'dthsNew':dthsNew,
+        'last_date':last_date,
+        'last_time':last_time
+    }
+
+    return render(request,'district_cases.html',context)
+
+
+
