@@ -7,13 +7,19 @@
     *{
         font-family: 'Titillium Web', sans-serif;
     }
-    .mainHeading{
+    .mainHeading {
         margin-top: 3.5% !important;
         font-weight: 900;
-
+        text-decoration:none !important;
+        color: black;
         text-shadow: 4px 4px rgb(216, 215, 215);
 
     }
+    a{
+        text-decoration: none !important;
+        color: black !important;
+    }
+
 
     @media screen and (min-width:700px) {
         .mainHeading{
@@ -76,6 +82,9 @@
     a{
         text-decoration:none !important;
         color:black;
+    }
+    a:hover{
+        color: darkblue !important;
     }
 
     @media screen and (min-width:1020px) {
@@ -233,7 +242,7 @@
 
 
                     <div class="col-sm heading view col-2">
-                        <a href="/{{a}}"> <p><b>{{a}}</b></p> </a>
+                        <a href="/covid-cases-in-{{a}}"> <p><b>{{a}}</b></p> </a>
                     </div>
 
                     <div class="col-sm view col-2">

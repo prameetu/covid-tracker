@@ -7,5 +7,5 @@ app_name = 'app4'
 
 urlpatterns = [
     path('', views.state_wise, name='cases'),
-    path('<str:num>/',views.state_wise1)
+    path('covid-cases-in-<str:num>/',views.state_wise1)
 ]
