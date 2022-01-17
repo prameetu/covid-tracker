@@ -73,6 +73,10 @@
         font-weight: bold;
     }
 
+    .mainHeading a{
+        text-decoration:none !important;
+    }
+
     @media screen and (min-width:1020px) {
         .data {
             padding-left: 280px !important;
@@ -140,7 +144,7 @@
 <body>
 
     <center>
-        <h1 class="mainHeading">COVID TRACKER</h1>
+        <a href="/"><h1 class="mainHeading">COVID TRACKER</h1></a>
         <!-- <img src="{% static 'img.png' %}"> -->
         
     </center>
@@ -156,6 +160,10 @@
                     <h2>{{ac}}</h2>
                     {%if acn %}
                     <b><p style="color: red;font-size:large">⬆{{acn}}</p></b>
+                    {%else%}
+                    <b>
+                        <p style="color: red; font-size:large"> -</p>
+                    </b>
                     {%endif%}
                 </button>
 
@@ -169,6 +177,10 @@
                     <h2>{{rec}}</h2>
                     {%if recNew %}
                     <b><p style="color: rgb(0, 65, 16);font-size:large">⬆{{recNew}}</p></b>
+                    {%else%}
+                    <b>
+                        <p style="color: rgb(0, 65, 16);; font-size:large"> -</p>
+                    </b>
                     {%endif%}
                 </button>
 
@@ -182,6 +194,10 @@
                     <h2>{{dths}}</h2>
                     {%if dthsNew%}
                     <b><p style="color: rgb(107, 1, 1);font-size:large">⬆{{dthsNew}}</p></b>
+                    {%else%}
+                    <b>
+                        <p style="color: rgb(107, 1, 1); font-size:large"> -</p>
+                    </b>
                     {%endif%}
                 </button>
 
@@ -243,6 +259,10 @@
                         <b>
                             <p style="color: red; font-size:large">⬆{{c.0}}</p>
                         </b>
+                        {%else%}
+                        <b>
+                            <p style="color: red; font-size:large"> -</p>
+                        </b>
                         {%endif%}
                     </div>
 
@@ -253,6 +273,10 @@
                         {%if c.1 %}
                         <b>
                             <p style="color: green;font-size:large">⬆{{c.1}}</p>
+                        </b>
+                        {%else%}
+                        <b>
+                            <p style="color: green; font-size:large"> -</p>
                         </b>
                         {%endif%}
 
@@ -266,6 +290,10 @@
                         <b>
                             <p style="color:grey;font-size:large">⬆{{c.2}}</p>
                         </b>
+                        {%else%}
+                        <b>
+                            <p style="color: grey; font-size:large"> -</p>
+                        </b>
                         {%endif%}
                     </div>
 
@@ -273,9 +301,13 @@
                         <b>
                             <p>{{b.3}}</p>
                         </b>
-                        {%if b.3 %}
+                        {%if c.3 %}
                         <b>
-                            <p style="color: indianred;font-size:large">⬆{{b.3}}</p>
+                            <p style="color: indianred;font-size:large">⬆{{c.3}}</p>
+                        </b>
+                        {%else%}
+                        <b>
+                            <p style="color: indianred; font-size:large">-</p>
                         </b>
                         {%endif%}
 
