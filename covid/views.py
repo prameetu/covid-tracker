@@ -16,6 +16,7 @@ def state_wise(request):
     response = urlopen(url,cafile=certifi.where())
 
     data_json = json.loads(response.read())
+    state_url=["andaman-and-nicobar-islands","andhra-pradesh","arunachal-pradesh","assam","bihar","chandigarh","chhattisgarh","dadra-and-nagar-haveli","delhi","goa","gujarat","haryana","himachal-pradesh","jammu-and-kashmir","jharkhand","karnataka","kerala","ladakh","lakshadweep","madhya-pradesh","maharashtra","manipur","meghalaya","mizoram","nagaland","odisha","puducherry","punjab","rajasthan","sikkim","tamil-nadu","telangana","tripura","uttar-pradesh","uttarakhand","west-bengal"]
 
     dict = {
         "Andaman and Nicobar Islands": "AN",
@@ -163,7 +164,7 @@ def state_wise(request):
 
     dths = data_json['deaths']
     dthsNew = data_json['deathsNew']
-    data = zip(state,totalCases,last24cases,totalRecover,last24recover,totalDeaths,last24deaths,totalTested,last24test)
+    data = zip(state,totalCases,last24cases,totalRecover,last24recover,totalDeaths,last24deaths,totalTested,last24test,state_url)
 
     cont_dict = {
         'data':data,
@@ -181,10 +182,22 @@ def state_wise(request):
 
 
 
-
+def Converter(str):
+    str1=str[0].capitalize()
+    for i in range(1,len(str)):
+        if str[i-1]=='-':
+            str1+=str[i].capitalize()
+        else:
+            if str[i]=='-':
+              str1+=' '         
+            else:
+              str1+=str[i]    
+    
+    return str1 
 
 def state_wise1(request,num):
-
+    
+    num=Converter(num)
     url = "https://api.covid19tracker.in/data/static/data.min.json"
 
     response = urlopen(url,cafile=certifi.where())
@@ -192,20 +205,20 @@ def state_wise1(request,num):
     data_json = json.loads(response.read())
 
     dict = {
-        "Andaman and Nicobar Islands": "AN",
+        "Andaman And Nicobar Islands": "AN",
         "Andhra Pradesh": "AP",
         "Arunachal Pradesh": "AR",
         "Assam": "AS",
         "Bihar": "BR",
         "Chandigarh": "CH",
         "Chhattisgarh": "CT",
-        "Dadra and Nagar Haveli": "DN",
+        "Dadra And Nagar Haveli": "DN",
         "Delhi": "DL",
         "Goa": "GA",
         "Gujarat": "GJ",
         "Haryana": "HR",
         "Himachal Pradesh": "HP",
-        "Jammu and Kashmir": "JK",
+        "Jammu And Kashmir": "JK",
         "Jharkhand": "JH",
         "Karnataka": "KA",
         "Kerala": "KL",
