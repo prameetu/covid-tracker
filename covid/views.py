@@ -5,7 +5,7 @@ from urllib.request import urlopen
 import json
 import certifi
 from datetime import datetime
-
+import folium
 
 
 
@@ -166,6 +166,98 @@ def state_wise(request):
     dthsNew = data_json['deathsNew']
     data = zip(state,totalCases,last24cases,totalRecover,last24recover,totalDeaths,last24deaths,totalTested,last24test,state_url)
 
+        
+    Long = [92.90425735525044,
+    79.97385121359896,
+    94.6623141206647,
+    92.68568626290354,
+    85.62534126970718,
+    76.75872466,
+    82.12782675167301,
+    73.09454961,
+    77.12804518,
+    73.86574064544497,
+    72.18750518311046,
+    76.49894521749557,
+    76.85663275206431,
+    75.00794343054076,
+    85.87307895838461,
+    76.24192278091935,
+    77.615112,
+    76.22961610979901,
+    72.82992744,
+    78.11342801165362,
+    75.32262083676606,
+    93.85297164915906,
+    91.23060135619838,
+    92.82329684757462,
+    94.3705421955022,
+    85.00227944796377,
+    79.71055402955935,
+    75.45751370184799,
+    74.83894799328242,
+    88.50779711921037,
+    78.74296176404843,
+    79.208824,
+    91.65250205094576,
+    80.67263981471628,
+    78.88461124441214,
+    88.15177427577096]
+
+    lat = [11.8454549271684,
+    16.557795934792352,
+    27.72904985313979,
+    26.33608583083341,
+    25.766303272306075,
+    30.7426,
+    21.55195971255835,
+    20.215132170000004,
+    28.645944300000007,
+    15.394225026558736,
+    22.37819881436921,
+    29.229507750953644,
+    31.65320768629747,
+    33.63368522304364,
+    23.754476578925654,
+    14.3876463059163,
+    10.299734542561,
+    34.209515,
+    10.43639053,
+    23.631026937997863,
+    19.37025338816622,
+    24.718395514498585,
+    25.478761503653818,
+    23.46017562281006,
+    26.10100802473572,
+    20.534809345326444,
+    11.87026028793732,
+    30.923044104266943,
+    26.4739224241132,
+    27.34002317274592,
+    11.128512112685732,
+    17.123184,
+    23.70753329973328,
+    27.05221058971433,
+    29.930554662588083,
+    23.401895343482565]
+
+    india = folium.Map(location = [20.5937,78.9629],zoom_start=4.5)
+
+    for state,lat,long,conf,Dec,Recov,last24cases in zip(state,lat,Long,totalCases,totalDeaths,totalRecover,last24cases):
+                                                
+    #for creating circle marker
+        folium.CircleMarker(location = [lat,long],
+        radius = 5,
+        color='red',
+        fill = True,
+        fill_color='red').add_to(india)    #for creating marker
+        folium.Marker(location = [lat,long],popup=folium.Popup(('<strong>State : '+str(state)+'</strong> <br>' +
+        '<strong>Confirmed : '+str(conf)+'</strong><br>' +
+        '<strong><font color= red>Deceased : </font>'+str(Dec)+'</strong><br>' +
+        '<strong><font color=green>Recovered : </font>'+str(Recov)+'</strong><br>' +
+        '<strong>Last 24 hours cases : '+str(last24cases)+'</strong><br>' ),max_width=200)).add_to(india)
+
+    map=india._repr_html_()
     cont_dict = {
         'data':data,
         'ac':ac,
@@ -175,7 +267,8 @@ def state_wise(request):
         'dths':dths,
         'dthsNew':dthsNew,
         "last_date":last_date,
-        "last_time":last_time
+        "last_time":last_time,
+        "map":map
     }
 
     return render(request,'cases.html',cont_dict)
