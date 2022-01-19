@@ -6,7 +6,118 @@ import json
 import certifi
 from datetime import datetime
 import folium
+from chart_studio import plotly
+import plotly.graph_objects as go
+from .test import date,Cases,deceased,recovered
 
+def graph():
+    totalcases = go.Figure()
+    totalcases.add_trace(go.Scatter(x=date, y=Cases, mode='lines',
+            name='Total Cases',connectgaps=True,line_color='blue',fill='tozeroy'))
+
+
+    totalcases.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='black',
+            linewidth=3,
+            ticks='outside',
+            tickfont=dict(
+                family='Arial',
+                size=12,
+                color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=True,
+            showline=True,
+            showticklabels=True,
+        ),
+        autosize=False,
+        showlegend=False,
+        plot_bgcolor='white',
+        title="Confirmed Cases",
+        title_font_size=30
+    )
+
+    totalcases=totalcases.to_html()
+
+    deceased_graph = go.Figure()
+    deceased_graph.add_trace(go.Scatter(x=date, y=deceased, mode='lines',
+            name='Total Cases',connectgaps=True,line_color='red',fill='tozeroy'))
+
+
+    deceased_graph.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='black',
+            linewidth=3,
+            ticks='outside',
+            tickfont=dict(
+                family='Arial',
+                size=12,
+                color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=True,
+            showline=True,
+            showticklabels=True,
+        ),
+        autosize=False,
+        showlegend=False,
+        plot_bgcolor='white',
+        title="Deaths",
+        title_font_size=30
+    )
+
+    deceased_html=deceased_graph.to_html()
+
+
+    recovered_graph = go.Figure()
+    recovered_graph.add_trace(go.Scatter(x=date, y=recovered, mode='lines',
+            name='Total Cases',connectgaps=True,line_color='green',fill='tozeroy'))
+
+
+    recovered_graph.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='black',
+            linewidth=3,
+            ticks='outside',
+            tickfont=dict(
+                family='Arial',
+                size=12,
+                color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=True,
+            showline=True,
+            showticklabels=True,
+        ),
+        autosize=False,
+        showlegend=False,
+        plot_bgcolor='white',
+        title="Recovered",
+        title_font_size=30
+    )
+
+    recovered_html=recovered_graph.to_html()
+    li=[]
+    li.append(totalcases)
+    li.append(deceased_html)
+    li.append(recovered_html) 
+    return li
 
 
 def state_wise(request):
@@ -257,7 +368,11 @@ def state_wise(request):
         '<strong><font color=green>Recovered : </font>'+str(Recov)+'</strong><br>' +
         '<strong>Last 24 hours cases : '+str(last24cases)+'</strong><br>' ),max_width=200)).add_to(india)
 
+
     map=india._repr_html_()
+    
+    Graph=graph()
+
     cont_dict = {
         'data':data,
         'ac':ac,
@@ -268,7 +383,9 @@ def state_wise(request):
         'dthsNew':dthsNew,
         "last_date":last_date,
         "last_time":last_time,
-        "map":map
+        "map":map,
+        "graph":Graph
+
     }
 
     return render(request,'cases.html',cont_dict)
