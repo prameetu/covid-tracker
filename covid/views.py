@@ -10,6 +10,157 @@ from chart_studio import plotly
 import plotly.graph_objects as go
 from .test import date,Cases,deceased,recovered
 
+def india_map():
+    url = "https://api.covid19tracker.in/data/static/data.min.json"
+
+    response = urlopen(url,cafile=certifi.where())
+
+    data_json = json.loads(response.read())
+
+    d = {
+        "Andaman and Nicobar Islands": "AN",
+        "Andhra Pradesh": "AP",
+        "Arunachal Pradesh": "AR",
+        "Assam": "AS",
+        "Bihar": "BR",
+        "Chandigarh": "CH",
+        "Chhattisgarh": "CT",
+        "Dadra and Nagar Haveli": "DN",
+        "Delhi": "DL",
+        "Goa": "GA",
+        "Gujarat": "GJ",
+        "Haryana": "HR",
+        "Himachal Pradesh": "HP",
+        "Jammu and Kashmir": "JK",
+        "Jharkhand": "JH",
+        "Karnataka": "KA",
+        "Kerala": "KL",
+        "Ladakh": "LA",
+        "Lakshadweep": "LD",
+        "Madhya Pradesh": "MP",
+        "Maharashtra": "MH",
+        "Manipur": "MN",
+        "Meghalaya": "ML",
+        "Mizoram": "MZ",
+        "Nagaland": "NL",
+        "Odisha": "OR",
+        "Puducherry": "PY",
+        "Punjab": "PB",
+        "Rajasthan": "RJ",
+        "Sikkim": "SK",
+        "Tamil Nadu": "TN",
+        "Telangana": "TG",
+        "Tripura": "TR",
+        "Uttar Pradesh": "UP",
+        "Uttarakhand": "UT",
+        "West Bengal": "WB",
+    }
+
+    state_india_map = ['Andaman & Nicobar',
+        'Andhra Pradesh',
+        'Arunachal Pradesh',
+        'Assam',
+        'Bihar',
+        'Chandigarh',
+        'Chhattisgarh',
+        'Dadra and Nagar Haveli and Daman and Diu',
+        'Delhi',
+        'Goa',
+        'Gujarat',
+        'Haryana',
+        'Himachal Pradesh',
+        'Jammu & Kashmir',
+        'Jharkhand',
+        'Karnataka',
+        'Kerala',
+        'Ladakh',
+        'Madhya Pradesh',
+        'Maharashtra',
+        'Manipur',
+        'Meghalaya',
+        'Mizoram',
+        'Nagaland',
+        'Odisha',
+        'Puducherry',
+        'Punjab',
+        'Rajasthan',
+        'Sikkim',
+        'Tamil Nadu',
+        'Telangana',
+        'Tripura',
+        'Uttarakhand',
+        'Uttar Pradesh',
+        'West Bengal'
+    ]
+    
+    last24cases = []
+
+    for a, b in d.items():
+        if(a == "Lakshadweep"):
+            continue
+        if data_json[b]['delta']['confirmed'] == None:
+                last24cases.append(0)
+        else:
+            last24cases.append(data_json[b]['delta']['confirmed'])
+
+    
+    import pandas as pd
+
+    fig = go.Figure(data=go.Choropleth(
+        geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
+        featureidkey='properties.ST_NM',
+        locationmode='geojson-id',
+        locations=state_india_map,
+        z=last24cases,
+
+        autocolorscale=False,
+        colorscale='ice_r',
+
+        colorbar=dict(
+            title="Active Cases",
+
+            thickness=15,
+            len=0.75,
+            
+            bgcolor='rgba(255,255,255,0.6)',
+
+            tick0=0,
+            dtick=10000,
+
+        )
+    ))
+
+    fig.update_geos(
+        visible=False,
+    #     projection=dict(
+    #         type='conic conformal',
+    #         parallels=[12.472944444, 35.172805555556],
+    #         rotation={'lat': 24, 'lon': 80}
+    #     ),
+        lonaxis={'range': [68, 98]},
+        lataxis={'range': [6, 38]}
+    )
+
+    fig.update_layout(
+        title=dict(
+            text="Past 24 hours COVID-19 Cases ",
+            xanchor='center',
+            x=0.5,
+            yref='paper',
+            yanchor='bottom',
+            y=1,
+            pad={'b': 10},
+        ),
+        title_font_size=23,
+        margin={'r': 0, 't': 40, 'l': 0, 'b': 0},
+        height=700,
+        width=650
+    )    
+
+    india_map_html = fig.to_html()
+    
+    return india_map_html
+
 def graph():
     totalcases = go.Figure()
     totalcases.add_trace(go.Scatter(x=date, y=Cases, mode='lines',
@@ -36,11 +187,14 @@ def graph():
             showline=True,
             showticklabels=True,
         ),
+        
         autosize=False,
         showlegend=False,
         plot_bgcolor='white',
+        
         title="Confirmed Cases",
-        title_font_size=30
+        title_x=0.5,
+        title_font_size=23
     )
 
     totalcases=totalcases.to_html()
@@ -74,7 +228,9 @@ def graph():
         showlegend=False,
         plot_bgcolor='white',
         title="Deaths",
-        title_font_size=30
+        title_x=0.5,
+
+        title_font_size=23
     )
 
     deceased_html=deceased_graph.to_html()
@@ -109,7 +265,8 @@ def graph():
         showlegend=False,
         plot_bgcolor='white',
         title="Recovered",
-        title_font_size=30
+        title_x=0.5,
+        title_font_size=23
     )
 
     recovered_html=recovered_graph.to_html()
@@ -372,6 +529,7 @@ def state_wise(request):
     map=india._repr_html_()
     
     Graph=graph()
+    india_map_graph = india_map()
 
     cont_dict = {
         'data':data,
@@ -383,7 +541,7 @@ def state_wise(request):
         'dthsNew':dthsNew,
         "last_date":last_date,
         "last_time":last_time,
-        "map":map,
+        "india_map_graph":india_map_graph,
         "graph":Graph
 
     }
