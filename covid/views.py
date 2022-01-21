@@ -114,7 +114,7 @@ def india_map():
         z=last24cases,
 
         autocolorscale=False,
-        colorscale='ice_r',
+        colorscale='emrld',
 
         colorbar=dict(
             title="Active Cases",

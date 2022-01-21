@@ -4,28 +4,33 @@
 <html lang="en">
 
 <style>
-    *{
+    * {
         font-family: 'Titillium Web', sans-serif;
     }
+
     .mainHeading {
         margin-top: 3.5% !important;
         font-weight: 900;
-        text-decoration:none !important;
+        text-decoration: none !important;
         color: black;
         text-shadow: 4px 4px rgb(216, 215, 215);
 
     }
-    a{
+
+    a {
         text-decoration: none !important;
         color: black !important;
     }
 
 
     @media screen and (min-width:700px) {
-        .mainHeading{
+        .mainHeading {
             font-size: 9vh;
 
         }
+    }
+    .indiaMap{
+        margin-left: 7% !important;
     }
 
     .view {
@@ -36,37 +41,44 @@
         padding: 0 !important;
         background-color: rgb(192 217 255 / 25%);
     }
-    .heading{
+
+    .heading {
         background-color: #efefef;
     }
 
     .view p {
         text-align: left !important;
     }
-    
-    .active{
-        background-color: red; /* For browsers that do not support gradients */
-        background-image: linear-gradient( rgb(73, 133, 245) , rgb(206, 222, 255));
-        color:darkblue;
+
+    .active {
+        background-color: red;
+        /* For browsers that do not support gradients */
+        background-image: linear-gradient(rgb(73, 133, 245), rgb(206, 222, 255));
+        color: darkblue;
         border-radius: 20%;
     }
-    .recover{
-        background-color: red; /* For browsers that do not support gradients */
-        background-image: linear-gradient( rgb(107, 245, 95) , rgb(205, 255, 189));
-        color:darkgreen;
-        border-radius: 20%;
 
-
-    }
-    .deaths{
-        background-color: red; /* For browsers that do not support gradients */
-        background-image: linear-gradient( rgb(243, 115, 115) , rgb(255, 198, 198));
-        color:rgb(90, 0, 0);
+    .recover {
+        background-color: red;
+        /* For browsers that do not support gradients */
+        background-image: linear-gradient(rgb(107, 245, 95), rgb(205, 255, 189));
+        color: darkgreen;
         border-radius: 20%;
 
 
     }
-    .buttonHeading{
+
+    .deaths {
+        background-color: red;
+        /* For browsers that do not support gradients */
+        background-image: linear-gradient(rgb(243, 115, 115), rgb(255, 198, 198));
+        color: rgb(90, 0, 0);
+        border-radius: 20%;
+
+
+    }
+
+    .buttonHeading {
         font-weight: 900;
     }
 
@@ -74,16 +86,17 @@
     /*.view:nth-of-type(even) {
         background-color: whitesmoke
     }*/
-    .lastUpdate{
-        font-size:smaller;
+    .lastUpdate {
+        font-size: smaller;
         font-weight: bold;
     }
 
-    a{
-        text-decoration:none !important;
-        color:black;
+    a {
+        text-decoration: none !important;
+        color: black;
     }
-    a:hover{
+
+    a:hover {
         color: darkblue !important;
     }
 
@@ -94,7 +107,7 @@
         }
     }
 
-    
+
 
 
     @media screen and (max-width: 768px) {
@@ -112,25 +125,29 @@
             padding: 0 !important;
             margin: 0 !important;
         }
-        .data{
+
+        .data {
             margin-left: 3% !important;
         }
-        .dataTable{
+
+        .dataTable {
             margin-left: 5% !important;
         }
 
 
-        .mainData{
+        .mainData {
             font-size: 10px !important;
         }
-        
-        .temp{
+
+        .temp {
             display: none;
         }
-        .recover{
+
+        .recover {
             margin-left: 20px;
         }
-        .deaths{
+
+        .deaths {
             margin-left: 24px;
         }
 
@@ -148,61 +165,73 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;400&display=swap" rel="stylesheet">
-        <title>Covid Tracker</title>
+    <title>Covid Tracker</title>
 </head>
 
 <body>
 
     <center>
-        <a href="/"><h1 class="mainHeading">COVID TRACKER</h1></a>
+        <a href="/">
+            <h1 class="mainHeading">COVID TRACKER</h1>
+        </a>
         <!-- <img src="{% static 'img.png' %}"> -->
-        
+
     </center>
 
     <br>
     <br>
     <div class="container data">
         <div class="row">
-           
+
             <div class="col-xs-3 col-3">
                 <button type="button" disabled class="mainData active">
-                    <b><h3 class="buttonHeading">Active</h3></b>
+                    <b>
+                        <h3 class="buttonHeading">Active</h3>
+                    </b>
                     <h2>{{ac}}</h2>
-                    <b><p style="color: red;font-size:large">⬆{{acn}}</p></b>
+                    <b>
+                        <p style="color: red;font-size:large">⬆{{acn}}</p>
+                    </b>
                 </button>
 
             </div>
             <div class="col-xs-1 col-1 temp">
-                
+
             </div>
             <div class="col-xs-4 col-4">
                 <button type="button" disabled class="mainData recover">
                     <h3 class="buttonHeading">Recovered</h3>
 
                     <h2>{{rec}}</h2>
-                    <b><p style="color: rgb(0, 65, 16);font-size:large">⬆{{recNew}}</p></b>
+                    <b>
+                        <p style="color: rgb(0, 65, 16);font-size:large">⬆{{recNew}}</p>
+                    </b>
                 </button>
 
             </div>
             <div class="col-xs-1 col-1 temp">
-                
+
             </div>
             <div class=" col-xs-3 col-3">
                 <button type="button" disabled class="mainData deaths">
                     <h3 class="buttonHeading">Deaths</h3>
 
                     <h2>{{dths}}</h2>
-                    <b><p style="color: rgb(107, 1, 1);font-size:large">⬆{{dthsNew}}</p></b>
+                    <b>
+                        <p style="color: rgb(107, 1, 1);font-size:large">⬆{{dthsNew}}</p>
+                    </b>
                 </button>
 
             </div>
-            
-            
+
+
         </div>
     </div>
 
-    <br><br><br>
-    <center><p class="lastUpdate">*Last Updated on {{last_date}},{{last_time}} hrs,IST</p></center>
+    <br><br>
+    <center>
+        <p class="lastUpdate">*Last Updated on {{last_date}},{{last_time}} hrs,IST</p>
+    </center>
     <div class="container data dataTable">
 
         <div class="row ">
@@ -231,8 +260,8 @@
                     <div class="col-sm heading view col-2">
                         <p><b>Tests</b></p>
                     </div>
-                    
-                    
+
+
 
 
                 </div>
@@ -242,7 +271,9 @@
 
 
                     <div class="col-sm heading view col-2">
-                        <a href="/covid-cases-in-{{j}}"> <p><b>{{a}}</b></p> </a>
+                        <a href="/covid-cases-in-{{j}}">
+                            <p><b>{{a}}</b></p>
+                        </a>
                     </div>
 
                     <div class="col-sm view col-2">
@@ -323,114 +354,119 @@
     <br>
     <br>
 
-    <div class="continer data">
-        {{india_map_graph | safe}}        
+    <div class="continer data indiaMap">
+        {{india_map_graph | safe}}
     </div>
-    
+
     <div class="container data">
-        <select  id="totaltime" onchange="total()" style="float:right;">
+        <select id="totaltime" onchange="total()" style="float:right;">
             <option value="0">All Time</option>
             <option value="1">2 Weeks</option>
             <option value="2">1 Month</option>
             <option value="3">3 Months</option>
             <option value="4">6 Months</option>
         </select>
-    </div>    
+    </div>
 
-    <div class="container total" >
+    <br><br>
+
+    <div class="container total data">
         {{graph.0 | safe}}
     </div>
-    
-    <div class="container total" style="display:none;">
+
+    <div class="container total data" style="display:none;">
         {{graph.1 | safe}}
     </div>
 
-    
-    <div class="container total" style="display:none;">
+
+    <div class="container total data" style="display:none;">
         {{graph.2 | safe}}
     </div>
 
-    
-    <div class="container total" style="display:none;">
+
+    <div class="container total data" style="display:none;">
         {{graph.3 | safe}}
     </div>
 
-    
-    <div class="container total" style="display:none;">
+
+    <div class="container total data" style="display:none;">
         {{graph.4 | safe}}
     </div>
-    
 
-    
+
+
     <!-- For deceased graph -->
-    
+
     <div class="container data">
-        <select  id="totaldeceased" onchange="totaldeceased()" style="float:right;">
+        <select id="totaldeceased" onchange="totaldeceased()" style="float:right;">
             <option value="0">All Time</option>
             <option value="1">2 Weeks</option>
             <option value="2">1 Month</option>
             <option value="3">3 Months</option>
             <option value="4">6 Months</option>
         </select>
-    </div>    
+    </div>
+    <br><br>
 
-    <div class="container deceased" >
+    <div class="container deceased data">
         {{deceased.0 | safe}}
     </div>
-    
-    <div class="container deceased" style="display:none;">
+
+    <div class="container deceased data" style="display:none;">
         {{deceased.1 | safe}}
     </div>
 
-    
-    <div class="container deceased" style="display:none;">
+
+    <div class="container deceased data" style="display:none;">
         {{deceased.2 | safe}}
     </div>
 
-    
-    <div class="container deceased" style="display:none;">
+
+    <div class="container deceased data" style="display:none;">
         {{deceased.3 | safe}}
     </div>
 
-    
-    <div class="container deceased" style="display:none;">
+
+    <div class="container deceased data" style="display:none;">
         {{deceased.4 | safe}}
     </div>
-    
- <!-- For recovered graph -->
-    
- <div class="container data">
-    <select  id="totalrecovered" onchange="totalrecovered()" style="float:right;">
-        <option value="0">All Time</option>
-        <option value="1">2 Weeks</option>
-        <option value="2">1 Month</option>
-        <option value="3">3 Months</option>
-        <option value="4">6 Months</option>
-    </select>
-</div>    
 
-<div class="container recovered" >
-    {{recovered.0 | safe}}
-</div>
+    <!-- For recovered graph -->
 
-<div class="container recovered" style="display:none;">
-    {{recovered.1 | safe}}
-</div>
+    <div class="container data">
+        <select id="totalrecovered" onchange="totalrecovered()" style="float:right;">
+            <option value="0">All Time</option>
+            <option value="1">2 Weeks</option>
+            <option value="2">1 Month</option>
+            <option value="3">3 Months</option>
+            <option value="4">6 Months</option>
+        </select>
+    </div>
+    <br><br>
 
 
-<div class="container recovered" style="display:none;">
-    {{recovered.2 | safe}}
-</div>
+    <div class="container recovered data">
+        {{recovered.0 | safe}}
+    </div>
+
+    <div class="container recovered data" style="display:none;">
+        {{recovered.1 | safe}}
+    </div>
 
 
-<div class="container recovered" style="display:none;">
-    {{recovered.3 | safe}}
-</div>
+    <div class="container recovered data" style="display:none;">
+        {{recovered.2 | safe}}
+    </div>
 
 
-<div class="container recovered" style="display:none;">
-    {{recovered.4 | safe}}
-</div>
+    <div class="container recovered data" style="display:none;">
+        {{recovered.3 | safe}}
+    </div>
+
+
+    <div class="container recovered data" style="display:none;">
+        {{recovered.4 | safe}}
+    </div>
 
 
 
@@ -459,146 +495,146 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
     <script>
-       function total(){ 
-            var x=document.getElementById('totaltime').value
-            var y=document.getElementsByClassName('total')
-            
-            if(x==0){
-                y[0].style.display="block";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="none";
+        function total() {
+            var x = document.getElementById('totaltime').value
+            var y = document.getElementsByClassName('total')
+
+            if (x == 0) {
+                y[0].style.display = "block";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
             }
 
-            if(x==1){
-                y[0].style.display="none";
-                y[1].style.display="block";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="none";
+            if (x == 1) {
+                y[0].style.display = "none";
+                y[1].style.display = "block";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
             }
 
-            if(x==2){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="block";
-                y[3].style.display="none";
-                y[4].style.display="none";
+            if (x == 2) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "block";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
             }
 
-            if(x==3){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="block";
-                y[4].style.display="none";
+            if (x == 3) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "block";
+                y[4].style.display = "none";
             }
 
-            if(x==4){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="block";
-            }
-        }
-        
-        
-        function totaldeceased(){ 
-            var x=document.getElementById('totaldeceased').value
-            var y=document.getElementsByClassName('deceased')
-            
-            if(x==0){
-                y[0].style.display="block";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="none";
-            }
-
-            if(x==1){
-                y[0].style.display="none";
-                y[1].style.display="block";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="none";
-            }
-
-            if(x==2){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="block";
-                y[3].style.display="none";
-                y[4].style.display="none";
-            }
-
-            if(x==3){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="block";
-                y[4].style.display="none";
-            }
-
-            if(x==4){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="block";
-            }
-        }
-
-        
-        function totalrecovered(){ 
-            var x=document.getElementById('totalrecovered').value
-            var y=document.getElementsByClassName('recovered')
-            
-            if(x==0){
-                y[0].style.display="block";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="none";
-            }
-
-            if(x==1){
-                y[0].style.display="none";
-                y[1].style.display="block";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="none";
-            }
-
-            if(x==2){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="block";
-                y[3].style.display="none";
-                y[4].style.display="none";
-            }
-
-            if(x==3){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="block";
-                y[4].style.display="none";
-            }
-
-            if(x==4){
-                y[0].style.display="none";
-                y[1].style.display="none";
-                y[2].style.display="none";
-                y[3].style.display="none";
-                y[4].style.display="block";
+            if (x == 4) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "block";
             }
         }
 
 
+        function totaldeceased() {
+            var x = document.getElementById('totaldeceased').value
+            var y = document.getElementsByClassName('deceased')
 
-    </script>    
+            if (x == 0) {
+                y[0].style.display = "block";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
+            }
+
+            if (x == 1) {
+                y[0].style.display = "none";
+                y[1].style.display = "block";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
+            }
+
+            if (x == 2) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "block";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
+            }
+
+            if (x == 3) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "block";
+                y[4].style.display = "none";
+            }
+
+            if (x == 4) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "block";
+            }
+        }
+
+
+        function totalrecovered() {
+            var x = document.getElementById('totalrecovered').value
+            var y = document.getElementsByClassName('recovered')
+
+            if (x == 0) {
+                y[0].style.display = "block";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
+            }
+
+            if (x == 1) {
+                y[0].style.display = "none";
+                y[1].style.display = "block";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
+            }
+
+            if (x == 2) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "block";
+                y[3].style.display = "none";
+                y[4].style.display = "none";
+            }
+
+            if (x == 3) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "block";
+                y[4].style.display = "none";
+            }
+
+            if (x == 4) {
+                y[0].style.display = "none";
+                y[1].style.display = "none";
+                y[2].style.display = "none";
+                y[3].style.display = "none";
+                y[4].style.display = "block";
+            }
+        }
+
+
+
+    </script>
 </body>
 
 
