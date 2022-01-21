@@ -114,10 +114,11 @@ def india_map():
         z=last24cases,
 
         autocolorscale=False,
-        colorscale='emrld',
+        colorscale='reds',
+    
 
         colorbar=dict(
-            title="Active Cases",
+            title="Cases",
 
             thickness=15,
             len=0.75,
@@ -153,8 +154,8 @@ def india_map():
         ),
         title_font_size=23,
         margin={'r': 0, 't': 40, 'l': 0, 'b': 0},
-        height=700,
-        width=650
+        height=650,
+        width=550
     )    
 
     india_map_html = fig.to_html()
