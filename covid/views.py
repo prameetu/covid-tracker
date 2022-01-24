@@ -8,7 +8,10 @@ from datetime import datetime
 import folium
 from chart_studio import plotly
 import plotly.graph_objects as go
-from .test import date,Cases,deceased,recovered
+from .fetch_data import date,Cases,deceased,recovered
+from .models import India_data
+
+
 
 def india_map():
     url = "https://api.covid19tracker.in/data/static/data.min.json"
@@ -162,11 +165,12 @@ def india_map():
     
     return india_map_html
 
+
+#FUNCTION FOR PLOTTING THE GRAPH
 def graph(datax,datay,name,color,title):
     totalcases = go.Figure()
     totalcases.add_trace(go.Scatter(x=datax, y=datay, mode='lines',
             name=name,connectgaps=True,line_color=color,fill='tozeroy'))
-
 
     totalcases.update_layout(
         xaxis=dict(
@@ -200,7 +204,10 @@ def graph(datax,datay,name,color,title):
 
     return totalcases.to_html()
 
+
+#FUNCTION FOR PASSING THE DATA TO PLOT GRAPH
 def plot_graph():
+    #TOTAL CASES GRAPH FOR EVERY TIME DURATION
     alltime=graph(date,Cases,'Total Cases','blue',"Confirmed Cases")
     Tweek=graph(date[-14:],Cases[-14:],'Total Cases','blue',"Confirmed Cases")
     One_month=graph(date[-30:],Cases[-30:],'Total Cases','blue',"Confirmed Cases")
@@ -209,6 +216,7 @@ def plot_graph():
 
     allTime=[alltime,Tweek,One_month,Three_month,six_month]
 
+    #NO OF DECEASED  GRAPH FOR EVERY TIME DURATION
     alltime=graph(date,deceased,'Total Cases','red',"Deaths")
     Tweek=graph(date[-14:],deceased[-14:],'Total Cases','red',"Deaths")
     One_month=graph(date[-30:],deceased[-30:],'Total Cases','red',"Deaths")
@@ -216,7 +224,9 @@ def plot_graph():
     six_month=graph(date[-180:],deceased[-180:],'Total Cases','red',"Deaths")
 
     Deceased=[alltime,Tweek,One_month,Three_month,six_month]
+    
 
+    #NO OF RECOVERED  GRAPH FOR EVERY TIME DURATION
     alltime=graph(date,recovered,'Total Cases','green',"Recovered")
     Tweek=graph(date[-14:],recovered[-14:],'Total Cases','green',"Recovered")
     One_month=graph(date[-30:],recovered[-30:],'Total Cases','green',"Recovered")
@@ -228,49 +238,9 @@ def plot_graph():
     return allTime,Deceased,Recovered
 
 
-    # recovered_graph = go.Figure()
-    # recovered_graph.add_trace(go.Scatter(x=date, y=recovered, mode='lines',
-    #         name='Total Cases',connectgaps=True,line_color='green',fill='tozeroy'))
-
-
-    # recovered_graph.update_layout(
-    #     xaxis=dict(
-    #         showline=True,
-    #         showgrid=False,
-    #         showticklabels=True,
-    #         linecolor='black',
-    #         linewidth=3,
-    #         ticks='outside',
-    #         tickfont=dict(
-    #             family='Arial',
-    #             size=12,
-    #             color='rgb(82, 82, 82)',
-    #         ),
-    #     ),
-    #     yaxis=dict(
-    #         showgrid=False,
-    #         zeroline=True,
-    #         showline=True,
-    #         showticklabels=True,
-    #     ),
-    #     autosize=False,
-    #     showlegend=False,
-    #     plot_bgcolor='white',
-    #     title="Recovered",
-    #     title_x=0.5,
-    #     title_font_size=23
-    # )
-
-    # recovered_html=recovered_graph.to_html()
-    # li=[]
-    # li.append(totalcases)
-    # li.append(deceased_html)
-    # li.append(recovered_html) 
-    # return li
-
 
 def state_wise(request):
-
+    
     url = "https://api.covid19tracker.in/data/static/data.min.json"
 
     response = urlopen(url,cafile=certifi.where())
@@ -453,6 +423,7 @@ def state_wise(request):
 
 
 
+#FUNCTION FOR CONVERTING andaman-nicobar into Andaman Nicobar
 def Converter(str):
     str1=str[0].capitalize()
     for i in range(1,len(str)):
@@ -465,6 +436,8 @@ def Converter(str):
               str1+=str[i]    
     
     return str1 
+
+
 
 def state_wise1(request,num):
     
