@@ -4,7 +4,7 @@ from django.shortcuts import render
 from urllib.request import urlopen
 import json
 import certifi
-from datetime import datetime
+from datetime import datetime,timedelta,date
 import folium
 from chart_studio import plotly
 import plotly.graph_objects as go
@@ -14,12 +14,49 @@ import time
 import threading
 
 def update():
-    print("Updating--")
+    print("executed")
+    
+    try:
+        obj = India_data.objects.all()
+        print("Delete krne ke pehle---->" ,len(obj))
+        India_data.objects.all().delete()
+        obj = India_data.objects.all()
+        print("delete krne ke baad---->" ,len(obj))
+    except Exception as e:
+        print(e)
+
+    url = "https://api.covid19tracker.in/data/static/timeseries.min.json"
+
+    response = urlopen(url,cafile=certifi.where())
+
+    data_json = json.loads(response.read())
+    
+    data_json1  = data_json['TT']['dates']
+
+    for i in data_json1:
+        
+        a = data_json1[i]['delta']['confirmed']
+        b = data_json1[i]['delta']['deceased']
+        c = data_json1[i]['delta']['recovered']
+        
+        if not a:
+            a = 0
+        if not b:
+            b = 0
+        if not c:
+            c = 0 
+
+        obj=India_data(date=i,total_cases=a,total_deceased=b,total_recovered=c)
+        obj.save()
+    obj = India_data.objects.all()
+    print("add krne ke baad---->",len(obj))
+
+    
 
 def updating_database():
     while True:
         update()
-        time.sleep(10)#6HRS
+        time.sleep(7200)
 
 
 t1 = threading.Thread(target=updating_database)
@@ -221,30 +258,30 @@ def graph(datax,datay,name,color,title):
 #FUNCTION FOR PASSING THE DATA TO PLOT GRAPH
 def plot_graph():
     #TOTAL CASES GRAPH FOR EVERY TIME DURATION
-    alltime=graph(date,Cases,'Total Cases','blue',"Confirmed Cases")
-    Tweek=graph(date[-14:],Cases[-14:],'Total Cases','blue',"Confirmed Cases")
-    One_month=graph(date[-30:],Cases[-30:],'Total Cases','blue',"Confirmed Cases")
-    Three_month=graph(date[-90:],Cases[-90:],'Total Cases','blue',"Confirmed Cases")
-    six_month=graph(date[-180:],Cases[-180:],'Total Cases','blue',"Confirmed Cases")
+    alltime=graph(date_cases,Cases,'Total Cases','blue',"Confirmed Cases")
+    Tweek=graph(date_cases[-14:],Cases[-14:],'Total Cases','blue',"Confirmed Cases")
+    One_month=graph(date_cases[-30:],Cases[-30:],'Total Cases','blue',"Confirmed Cases")
+    Three_month=graph(date_cases[-90:],Cases[-90:],'Total Cases','blue',"Confirmed Cases")
+    six_month=graph(date_cases[-180:],Cases[-180:],'Total Cases','blue',"Confirmed Cases")
 
     allTime=[alltime,Tweek,One_month,Three_month,six_month]
 
     #NO OF DECEASED  GRAPH FOR EVERY TIME DURATION
-    alltime=graph(date,deceased,'Total Cases','red',"Deaths")
-    Tweek=graph(date[-14:],deceased[-14:],'Total Cases','red',"Deaths")
-    One_month=graph(date[-30:],deceased[-30:],'Total Cases','red',"Deaths")
-    Three_month=graph(date[-90:],deceased[-90:],'Total Cases','red',"Deaths")
-    six_month=graph(date[-180:],deceased[-180:],'Total Cases','red',"Deaths")
+    alltime=graph(date_cases,deceased,'Total Cases','red',"Deaths")
+    Tweek=graph(date_cases[-14:],deceased[-14:],'Total Cases','red',"Deaths")
+    One_month=graph(date_cases[-30:],deceased[-30:],'Total Cases','red',"Deaths")
+    Three_month=graph(date_cases[-90:],deceased[-90:],'Total Cases','red',"Deaths")
+    six_month=graph(date_cases[-180:],deceased[-180:],'Total Cases','red',"Deaths")
 
     Deceased=[alltime,Tweek,One_month,Three_month,six_month]
     
 
     #NO OF RECOVERED  GRAPH FOR EVERY TIME DURATION
-    alltime=graph(date,recovered,'Total Cases','green',"Recovered")
-    Tweek=graph(date[-14:],recovered[-14:],'Total Cases','green',"Recovered")
-    One_month=graph(date[-30:],recovered[-30:],'Total Cases','green',"Recovered")
-    Three_month=graph(date[-90:],recovered[-90:],'Total Cases','green',"Recovered")
-    six_month=graph(date[-180:],recovered[-180:],'Total Cases','green',"Recovered")
+    alltime=graph(date_cases,recovered,'Total Cases','green',"Recovered")
+    Tweek=graph(date_cases[-14:],recovered[-14:],'Total Cases','green',"Recovered")
+    One_month=graph(date_cases[-30:],recovered[-30:],'Total Cases','green',"Recovered")
+    Three_month=graph(date_cases[-90:],recovered[-90:],'Total Cases','green',"Recovered")
+    six_month=graph(date_cases[-180:],recovered[-180:],'Total Cases','green',"Recovered")
 
     Recovered=[alltime,Tweek,One_month,Three_month,six_month]
 

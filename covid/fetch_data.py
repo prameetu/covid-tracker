@@ -10,13 +10,13 @@ from .models import *
 #FETCHING THE DATA FROM THE DATABASE FOR PLOTTING THE GRAPH
 obj=India_data.objects.all()
 
-date=[]
+date_cases=[]
 Cases=[]
 deceased=[]
 recovered=[]
 
 for i in obj:
-    date.append(i.date)
+    date_cases.append(i.date)
     Cases.append(i.total_cases)
     deceased.append(i.total_deceased)  
     recovered.append(i.total_recovered)
