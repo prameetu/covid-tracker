@@ -12,6 +12,12 @@ from .fetch_data import *
 from .models import India_data
 import time
 import threading
+from .models import *
+
+
+
+
+
 
 def update():
     print("executed")
@@ -257,6 +263,19 @@ def graph(datax,datay,name,color,title):
 
 #FUNCTION FOR PASSING THE DATA TO PLOT GRAPH
 def plot_graph():
+    obj=India_data.objects.all()
+
+    date_cases=[]
+    Cases=[]
+    deceased=[]
+    recovered=[]
+
+    for i in obj:
+        date_cases.append(i.date)
+        Cases.append(i.total_cases)
+        deceased.append(i.total_deceased)  
+        recovered.append(i.total_recovered)
+    
     #TOTAL CASES GRAPH FOR EVERY TIME DURATION
     alltime=graph(date_cases,Cases,'Total Cases','blue',"Confirmed Cases")
     Tweek=graph(date_cases[-14:],Cases[-14:],'Total Cases','blue',"Confirmed Cases")
@@ -303,6 +322,7 @@ def state_wise(request):
         'data':data,
         'ac':ac,
         'acn':acn,
+        'acn_org':acn_org,
         'rec':rec,
         'recNew':recNew,
         'dths':dths,

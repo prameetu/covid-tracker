@@ -8,19 +8,6 @@ from .models import *
 
 
 #FETCHING THE DATA FROM THE DATABASE FOR PLOTTING THE GRAPH
-obj=India_data.objects.all()
-
-date_cases=[]
-Cases=[]
-deceased=[]
-recovered=[]
-
-for i in obj:
-    date_cases.append(i.date)
-    Cases.append(i.total_cases)
-    deceased.append(i.total_deceased)  
-    recovered.append(i.total_recovered)
-
 
 #FOR TOTAL CASES
 
@@ -146,7 +133,8 @@ data_json = json.loads(response.read())
 #FOR ACTIVE CASES RECORD
 ac = data_json['activeCases']
 acn = data_json['activeCasesNew']
-
+acn_org = acn
+acn = abs(acn)
 #FOR RECOVERED  RECORD
 rec = data_json['recovered']
 recNew = data_json['recoveredNew']

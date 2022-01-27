@@ -1,5 +1,4 @@
 {% load static %}
-
 <!doctype html>
 <html lang="en">
 
@@ -150,11 +149,7 @@
         .deaths {
             margin-left: 24px;
         }
-        .plots{
-            width: 50vw !important;
-            margin: 0% !important;
-            padding: 0%  !important;
-        }
+        
 
     }
 </style>
@@ -171,6 +166,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;400&display=swap" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169198200-1"></script>
+    <!-- For Analytics -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -206,9 +202,15 @@
                         <h3 class="buttonHeading">Active</h3>
                     </b>
                     <h2>{{ac}}</h2>
+                    {% if acn_org < 0 %}
+                    <b>
+                        <p style="color: rgb(0, 65, 16);font-size:large">🠗{{acn}}</p>
+                    </b>
+                    {%else%}
                     <b>
                         <p style="color: red;font-size:large">⬆{{acn}}</p>
                     </b>
+                    {%endif%}
                 </button>
 
             </div>
@@ -371,7 +373,7 @@
     <br>
     <br>
 
-    <div class="continer data indiaMap plots">
+    <div class="continer data indiaMap ">
         {{india_map_graph | safe}}
     </div>
 
@@ -387,26 +389,26 @@
 
     <br><br>
 
-    <div class="container total data">
+    <div class="container total data ">
         {{graph.0 | safe}}
     </div>
 
-    <div class="container total data" style="display:none;">
+    <div class="container total data " style="display:none;">
         {{graph.1 | safe}}
     </div>
 
 
-    <div class="container total data" style="display:none;">
+    <div class="container total data " style="display:none;">
         {{graph.2 | safe}}
     </div>
 
 
-    <div class="container total data" style="display:none;">
+    <div class="container total data " style="display:none;">
         {{graph.3 | safe}}
     </div>
 
 
-    <div class="container total data" style="display:none;">
+    <div class="container total data " style="display:none;">
         {{graph.4 | safe}}
     </div>
 
@@ -425,26 +427,26 @@
     </div>
     <br><br>
 
-    <div class="container deceased data">
+    <div class="container deceased data ">
         {{deceased.0 | safe}}
     </div>
 
-    <div class="container deceased data" style="display:none;">
+    <div class="container deceased data " style="display:none;">
         {{deceased.1 | safe}}
     </div>
 
 
-    <div class="container deceased data" style="display:none;">
+    <div class="container deceased data " style="display:none;">
         {{deceased.2 | safe}}
     </div>
 
 
-    <div class="container deceased data" style="display:none;">
+    <div class="container deceased data " style="display:none;">
         {{deceased.3 | safe}}
     </div>
 
 
-    <div class="container deceased data" style="display:none;">
+    <div class="container deceased data " style="display:none;">
         {{deceased.4 | safe}}
     </div>
 
@@ -462,26 +464,26 @@
     <br><br>
 
 
-    <div class="container recovered data">
+    <div class="container recovered data ">
         {{recovered.0 | safe}}
     </div>
 
-    <div class="container recovered data" style="display:none;">
+    <div class="container recovered data " style="display:none;">
         {{recovered.1 | safe}}
     </div>
 
 
-    <div class="container recovered data" style="display:none;">
+    <div class="container recovered data " style="display:none;">
         {{recovered.2 | safe}}
     </div>
 
 
-    <div class="container recovered data" style="display:none;">
+    <div class="container recovered data " style="display:none;">
         {{recovered.3 | safe}}
     </div>
 
 
-    <div class="container recovered data" style="display:none;">
+    <div class="container recovered data " style="display:none;">
         {{recovered.4 | safe}}
     </div>
 
