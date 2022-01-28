@@ -109,18 +109,18 @@
 
 
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
 
         .view {
             border-radius: 8px !important;
             border: 1px solid white !important;
             margin-left: 3px !important;
             margin-top: 3px !important;
-            font-size: 12px !important;
+            font-size: 14px !important;
         }
 
         .view p {
-            font-size: 12.5px !important;
+            font-size: 14px !important;
             padding: 0 !important;
             margin: 0 !important;
         }
@@ -136,6 +136,10 @@
 
         .mainData {
             font-size: 10px !important;
+        }
+        .mobiledata{
+            width:190vw !important;
+            margin-left: 15vw !important;
         }
 
         .temp {
@@ -185,7 +189,7 @@
 
     <center>
         <a href="/">
-            <h1 class="mainHeading">COVID TRACKER</h1>
+            <h1 class="mainHeading mobiledata">COVID TRACKER</h1>
         </a>
         <!-- <img src="{% static 'img.png' %}"> -->
 
@@ -193,7 +197,7 @@
 
     <br>
     <br>
-    <div class="container data">
+    <div class="container data mobiledata">
         <div class="row">
 
             <div class="col-xs-3 col-3">
@@ -251,7 +255,7 @@
     <center>
         <p class="lastUpdate">*Last Updated on {{last_date}},{{last_time}} hrs,IST</p>
     </center>
-    <div class="container data dataTable">
+    <div class="container data dataTable mobiledata">
 
         <div class="row ">
             <!-- <div class="col-2 spacing">

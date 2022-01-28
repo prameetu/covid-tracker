@@ -19,54 +19,54 @@ from .models import *
 
 
 
-def update():
-    print("executed")
+# def update():
+#     print("executed")
     
-    try:
-        obj = India_data.objects.all()
-        print("Delete krne ke pehle---->" ,len(obj))
-        India_data.objects.all().delete()
-        obj = India_data.objects.all()
-        print("delete krne ke baad---->" ,len(obj))
-    except Exception as e:
-        print(e)
+#     try:
+#         obj = India_data.objects.all()
+#         print("Delete krne ke pehle---->" ,len(obj))
+#         India_data.objects.all().delete()
+#         obj = India_data.objects.all()
+#         print("delete krne ke baad---->" ,len(obj))
+#     except Exception as e:
+#         print(e)
 
-    url = "https://api.covid19tracker.in/data/static/timeseries.min.json"
+#     url = "https://api.covid19tracker.in/data/static/timeseries.min.json"
 
-    response = urlopen(url,cafile=certifi.where())
+#     response = urlopen(url,cafile=certifi.where())
 
-    data_json = json.loads(response.read())
+#     data_json = json.loads(response.read())
     
-    data_json1  = data_json['TT']['dates']
+#     data_json1  = data_json['TT']['dates']
 
-    for i in data_json1:
+#     for i in data_json1:
         
-        a = data_json1[i]['delta']['confirmed']
-        b = data_json1[i]['delta']['deceased']
-        c = data_json1[i]['delta']['recovered']
+#         a = data_json1[i]['delta']['confirmed']
+#         b = data_json1[i]['delta']['deceased']
+#         c = data_json1[i]['delta']['recovered']
         
-        if not a:
-            a = 0
-        if not b:
-            b = 0
-        if not c:
-            c = 0 
+#         if not a:
+#             a = 0
+#         if not b:
+#             b = 0
+#         if not c:
+#             c = 0 
 
-        obj=India_data(date=i,total_cases=a,total_deceased=b,total_recovered=c)
-        obj.save()
-    obj = India_data.objects.all()
-    print("add krne ke baad---->",len(obj))
+#         obj=India_data(date=i,total_cases=a,total_deceased=b,total_recovered=c)
+#         obj.save()
+#     obj = India_data.objects.all()
+#     print("add krne ke baad---->",len(obj))
 
     
 
-def updating_database():
-    while True:
-        update()
-        time.sleep(7200)
+# def updating_database():
+#     while True:
+#         update()
+#         time.sleep(7200)
 
 
-t1 = threading.Thread(target=updating_database)
-t1.start()
+# t1 = threading.Thread(target=updating_database)
+# t1.start()
 
 
 def india_map():
