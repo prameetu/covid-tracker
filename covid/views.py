@@ -5,7 +5,6 @@ from urllib.request import urlopen
 import json
 import certifi
 from datetime import datetime,timedelta,date
-import folium
 from chart_studio import plotly
 import plotly.graph_objects as go
 from .fetch_data import *
